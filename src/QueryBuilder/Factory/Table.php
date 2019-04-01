@@ -2,7 +2,7 @@
 
 namespace HarmonyIO\Dbal\QueryBuilder\Factory;
 
-use HarmonyIO\Dbal\Exception\InvalidFieldDefinition;
+use HarmonyIO\Dbal\Exception\InvalidTableDefinition;
 use HarmonyIO\Dbal\QueryBuilder\Identifier\Table as TableObject;
 use HarmonyIO\Dbal\QueryBuilder\QuoteStyle;
 
@@ -18,12 +18,12 @@ class Table
 
     public function buildFromString(string $string): TableObject
     {
-        $pattern = '~^(?P<table>.+)(?:\s+as\s+(?P<alias>.+))?$~i';
+        $pattern = '~^(?P<table>[^\s]+)(?:\s+as\s+(?P<alias>[^\s]+))?$~i';
 
         if (preg_match($pattern, $string, $tableParts) !== 1) {
-            throw new InvalidFieldDefinition($string);
+            throw new InvalidTableDefinition($string);
         }
 
-        return new TableObject($this->quoteStyle, $tableParts['table'], $fieldParts['alias'] ?? null);
+        return new TableObject($this->quoteStyle, $tableParts['table'], $tableParts['alias'] ?? null);
     }
 }

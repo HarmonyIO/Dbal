@@ -20,7 +20,7 @@ class Field
 
     public function buildFromString(string $string): Column
     {
-        $pattern = '~^(?:(?:(?P<function>.+)\s*\(\s*(?:(?P<table1>.+)(?:\.))?(?P<column1>[^ ]+)\s*\))|(?:(?P<table2>.+)(?:\.))?(?P<column2>[^ ]+))(?:\s+as\s+(?P<alias>.+))?$~ix';
+        $pattern = '~^(?:(?:(?P<function>[^\s]+)\s*\(\s*(?:(?P<table1>[^\s\(\)]+)(?:\.))?(?P<column1>[^\s\(\)]+)\s*\))|(?:(?P<table2>[^\s\(\)]+)(?:\.))?(?P<column2>[^\s\(\)]+))(?:\s+as\s+(?P<alias>.+))?$~ix';
 
         if (preg_match($pattern, $string, $fieldParts) !== 1) {
             throw new InvalidFieldDefinition($string);

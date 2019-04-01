@@ -3,7 +3,6 @@
 namespace HarmonyIO\Dbal\QueryBuilder\Factory;
 
 use HarmonyIO\Dbal\Exception\InvalidConditionDefinition;
-use HarmonyIO\Dbal\Exception\UnsupportedConditionOperator;
 use HarmonyIO\Dbal\QueryBuilder\Column\Column;
 use HarmonyIO\Dbal\QueryBuilder\Column\Value;
 use HarmonyIO\Dbal\QueryBuilder\Condition\Condition as ConditionObject;
@@ -33,11 +32,11 @@ class Condition
      */
     public function buildFromString(string $string, $parameter = null): ConditionObject
     {
-        $pattern = '~(\s*(!=|=|<>|<|>|\s+IS(\s+NOT(\s+NULL)?)?|\s+IN)\s*)~i';
+        $pattern = '~(\s*(!=|=|<>|<|>|\s+IS(\s+NOT)?\s+NULL|(\s+NOT)?\s+IN)\s*)~i';
 
         $fields = preg_split($pattern, $string);
 
-        $pattern = '~\s*(!=|=|<>|<|>|\s+IS(?:\s+NOT(?:\s+NULL)?)?|\s+IN)\s*~i';
+        $pattern = '~\s*(!=|=|<>|<|>|\s+IS(?:\s+NOT)?\s+NULL|(\s+NOT)?\s+IN)\s*~i';
 
         if (preg_match($pattern, $string, $matches) !==1) {
             throw new InvalidConditionDefinition($string);
@@ -45,7 +44,9 @@ class Condition
 
         $field1 = $this->fieldFactory->buildFromString($fields[0]);
 
-        $parameter = $this->buildParameter($fields[1], $parameter);
+        if ($fields[1]!== '') {
+            $parameter = $this->buildParameter($fields[1], $parameter);
+        }
 
         $operator = strtoupper(trim($matches[1]));
 
@@ -68,9 +69,6 @@ class Condition
 
             case 'NOT IN':
                 return new NotInCondition($field1, $parameter);
-
-            default:
-                throw new UnsupportedConditionOperator($operator);
         }
     }
 
