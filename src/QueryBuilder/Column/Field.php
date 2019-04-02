@@ -41,7 +41,7 @@ final class Field implements Column
         return $this->alias;
     }
 
-    public function toSql(): string
+    public function toSqlWithoutAlias(): string
     {
         $sql = '';
 
@@ -50,6 +50,13 @@ final class Field implements Column
         }
 
         $sql .= $this->quoteStyle->getValue() . $this->name . $this->quoteStyle->getValue();
+
+        return $sql;
+    }
+
+    public function toSql(): string
+    {
+        $sql = $this->toSqlWithoutAlias();
 
         if ($this->alias !== null) {
             $sql .= ' AS ' . $this->quoteStyle->getValue() . $this->alias . $this->quoteStyle->getValue();

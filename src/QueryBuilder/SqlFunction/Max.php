@@ -4,15 +4,16 @@ namespace HarmonyIO\Dbal\QueryBuilder\SqlFunction;
 
 use HarmonyIO\Dbal\QueryBuilder\Column\Column;
 use HarmonyIO\Dbal\QueryBuilder\QueryPart;
+use HarmonyIO\Dbal\QueryBuilder\QuoteStyle;
 
 final class Max implements QueryPart, Column
 {
     /** @var SqlFunction */
     private $function;
 
-    public function __construct(Column $column)
+    public function __construct(QuoteStyle $quoteStyle, Column $column)
     {
-        $this->function = new SqlFunction('max', $column);
+        $this->function = new SqlFunction($quoteStyle, 'max', $column);
     }
 
     public function getTable(): ?string
@@ -30,9 +31,9 @@ final class Max implements QueryPart, Column
         return $this->function->getAlias();
     }
 
-    public function toSqlWitOutAlias(): string
+    public function toSqlWithOutAlias(): string
     {
-        return $this->function->toSqlWitOutAlias();
+        return $this->function->toSqlWithOutAlias();
     }
 
     public function toSql(): string

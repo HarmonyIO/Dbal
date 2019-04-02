@@ -40,13 +40,20 @@ class Value implements Column
         return $this->alias;
     }
 
-    public function toSql(): string
+    public function toSqlWithoutAlias(): string
     {
         $value = '?';
 
         if (is_array($this->value)) {
             $value = implode(', ', array_fill(0, count($this->value), '?'));
         }
+
+        return $value;
+    }
+
+    public function toSql(): string
+    {
+        $value = $this->toSqlWithoutAlias();
 
         $alias = '';
 

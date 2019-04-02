@@ -11,4 +11,6 @@ interface Column extends QueryPart
     public function getName(): string;
 
     public function getAlias(): ?string;
+
+    public function toSqlWithoutAlias(): string;
 }

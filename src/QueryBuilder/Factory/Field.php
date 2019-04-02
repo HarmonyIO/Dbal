@@ -44,7 +44,10 @@ class Field
             throw new UnsupportedFunction($fieldData['function']);
         }
 
-        return new $function($this->buildField($fieldData['column1'], $fieldData['table1'], $fieldData['alias'] ?? null));
+        return new $function(
+            $this->quoteStyle,
+            $this->buildField($fieldData['column1'], $fieldData['table1'], $fieldData['alias'] ?? null)
+        );
     }
 
     private function buildField(string $name, ?string $table = null, ?string $alias = null): FieldObject
