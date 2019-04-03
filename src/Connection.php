@@ -46,11 +46,6 @@ class Connection
         $this->conditionFactory = new Condition($this->quoteStyle, $this->fieldFactory);
     }
 
-    public function getQuoteStyling(): QuoteStyle
-    {
-        return $this->quoteStyle;
-    }
-
     public function select(string ...$fieldDefinitions): Select
     {
         $fields = array_reduce($fieldDefinitions, function (array $fields, string $fieldDefinition) {

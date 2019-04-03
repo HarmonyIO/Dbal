@@ -38,7 +38,7 @@ final class Select
     /** @var FieldFactory */
     private $fieldFactory;
 
-    /** @var From */
+    /** @var From|null */
     private $from;
 
     /** @var Join[] */
@@ -178,6 +178,12 @@ final class Select
 
     public function getQuery(): string
     {
+        $from = '';
+
+        if ($this->from !== null) {
+            $from = ' ' .$this->from->toSql();
+        }
+
         $joins = '';
 
         if ($this->joins) {
@@ -220,6 +226,6 @@ final class Select
             $offset = ' ' . $this->offset->toSql();
         }
 
-        return 'SELECT ' . $this->fieldSet->toSql() . ' ' . $this->from->toSql() . $joins . $condition . $orders . $limit . $offset;
+        return 'SELECT ' . $this->fieldSet->toSql() . $from . $joins . $condition . $orders . $limit . $offset;
     }
 }

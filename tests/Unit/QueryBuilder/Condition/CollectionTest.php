@@ -49,4 +49,38 @@ class CollectionTest extends TestCase
 
         $this->assertCount(2, $collection->getConditions());
     }
+
+    public function testAndWhere(): void
+    {
+        $collection = new Collection($this->conditionFactory);
+
+        $this->conditionFactory
+            ->expects($this->once())
+            ->method('buildFromString')
+            ->willReturn($this->createMock(Condition::class))
+        ;
+
+        $collection->andWhere(static function (Collection $collection): void {
+            $collection->where('1 = 1');
+        });
+
+        $this->assertCount(1, $collection->getConditions());
+    }
+
+    public function testOrWhere(): void
+    {
+        $collection = new Collection($this->conditionFactory);
+
+        $this->conditionFactory
+            ->expects($this->once())
+            ->method('buildFromString')
+            ->willReturn($this->createMock(Condition::class))
+        ;
+
+        $collection->orWhere(static function (Collection $collection): void {
+            $collection->where('1 = 1');
+        });
+
+        $this->assertCount(1, $collection->getConditions());
+    }
 }
