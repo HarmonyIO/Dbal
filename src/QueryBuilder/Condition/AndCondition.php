@@ -2,6 +2,8 @@
 
 namespace HarmonyIO\Dbal\QueryBuilder\Condition;
 
+use HarmonyIO\Dbal\QueryBuilder\Column\Field;
+
 final class AndCondition implements Condition
 {
     /** @var Condition[] */
@@ -21,5 +23,19 @@ final class AndCondition implements Condition
         }, []);
 
         return '(' . implode(' AND ', $conditionsSql) . ')';
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        $parameters = [];
+
+        foreach ($this->conditions as $condition) {
+            $parameters = array_merge($parameters, $condition->getParameters());
+        }
+
+        return $parameters;
     }
 }

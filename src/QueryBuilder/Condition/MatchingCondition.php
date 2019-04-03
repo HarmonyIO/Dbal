@@ -3,6 +3,7 @@
 namespace HarmonyIO\Dbal\QueryBuilder\Condition;
 
 use HarmonyIO\Dbal\QueryBuilder\Column\Column;
+use HarmonyIO\Dbal\QueryBuilder\Column\Field;
 use HarmonyIO\Dbal\QueryBuilder\Column\Value;
 
 final class MatchingCondition implements Condition
@@ -41,5 +42,19 @@ final class MatchingCondition implements Condition
         }
 
         return '?';
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        if ($this->rightValue instanceof Field) {
+            return [];
+        }
+
+        return [
+            $this->rightValue->getValue(),
+        ];
     }
 }

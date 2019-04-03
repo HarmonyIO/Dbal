@@ -18,4 +18,12 @@ final class NullCondition implements Condition
     {
         return $this->field->toSql() . ' IS NULL';
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        return [];
+    }
 }

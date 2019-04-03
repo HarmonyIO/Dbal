@@ -18,4 +18,12 @@ final class NotNullCondition implements Condition
     {
         return $this->field->toSql() . ' IS NOT NULL';
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        return [];
+    }
 }

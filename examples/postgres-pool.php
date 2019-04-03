@@ -16,10 +16,11 @@ $postgresPool = pool(
 $connection = new Connection($postgresPool);
 
 $query = $connection
-    ->insert('users')
-    ->value('column1', 1)
-    ->value('column2', 1)
-    ->getQuery()
+    ->select('column1')
+    ->from('table1')
+    ->join('table2', 'table2.id = table1.id')
+    ->where('column1 not in (?)', [1, 2])
 ;
 
-var_dump($query);
+var_dump($query->getQuery());
+var_dump($query->getParameters());

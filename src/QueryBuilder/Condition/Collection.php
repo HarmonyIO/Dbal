@@ -50,4 +50,18 @@ class Collection
     {
         return $this->conditions;
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        $parameters = [];
+
+        foreach ($this->conditions as $condition) {
+            $parameters = array_merge($parameters, $condition->getParameters());
+        }
+
+        return $parameters;
+    }
 }

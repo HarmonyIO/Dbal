@@ -29,4 +29,12 @@ abstract class Join implements QueryPart
     {
         return $this->type->getValue() . ' ' . $this->joinedTable->toSql() . ' ON ' . $this->condition->toSql();
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        return $this->condition->getParameters();
+    }
 }

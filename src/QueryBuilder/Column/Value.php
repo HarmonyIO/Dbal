@@ -16,7 +16,7 @@ class Value implements Column
     private $alias;
 
     /**
-     * @param int|string|mixed[] $value
+     * @param int|string|mixed[]|null $value
      */
     public function __construct(QuoteStyle $quoteStyle, $value, ?string $alias = null)
     {
@@ -31,6 +31,14 @@ class Value implements Column
     }
 
     public function getName(): string
+    {
+        return (string) $this->value;
+    }
+
+    /**
+     * @return int|string|mixed[]|null
+     */
+    public function getValue()
     {
         return $this->value;
     }

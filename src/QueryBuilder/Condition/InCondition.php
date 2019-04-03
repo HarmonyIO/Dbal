@@ -32,4 +32,12 @@ final class InCondition implements Condition
 
         return sprintf('(%s)', implode(', ', $placeHolders));
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        return array_values($this->set);
+    }
 }

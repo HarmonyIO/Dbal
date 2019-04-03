@@ -6,4 +6,8 @@ use HarmonyIO\Dbal\QueryBuilder\QueryPart;
 
 interface Condition extends QueryPart
 {
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array;
 }

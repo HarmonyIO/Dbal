@@ -22,4 +22,18 @@ final class OrCondition implements Condition
 
         return '(' . implode(' OR ', $conditionsSql) . ')';
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        $parameters = [];
+
+        foreach ($this->conditions as $condition) {
+            $parameters = array_merge($parameters, $condition->getParameters());
+        }
+
+        return $parameters;
+    }
 }

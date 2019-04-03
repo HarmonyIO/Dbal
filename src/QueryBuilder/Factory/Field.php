@@ -18,6 +18,9 @@ class Field
         $this->quoteStyle = $quoteStyle;
     }
 
+    /**
+     * @param int|string|mixed[]|null $parameter
+     */
     public function buildFromString(string $string): Column
     {
         $pattern = '~^(?:(?:(?P<function>[^\s]+)\s*\(\s*(?:(?P<table1>[^\s\(\)]+)(?:\.))?(?P<column1>[^\s\(\)]+)\s*\))|(?:(?P<table2>[^\s\(\)]+)(?:\.))?(?P<column2>[^\s\(\)]+))(?:\s+as\s+(?P<alias>.+))?$~ix';
