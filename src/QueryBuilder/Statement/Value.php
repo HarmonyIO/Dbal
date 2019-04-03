@@ -27,7 +27,7 @@ class Value
     public function getValueSql(): string
     {
         if ($this->value instanceof Field) {
-            $this->value->toSql();
+            return $this->value->toSql();
         }
 
         return '?';
