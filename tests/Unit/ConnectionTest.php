@@ -76,4 +76,26 @@ class ConnectionTest extends TestCase
 
         $this->assertSame('DELETE FROM `table`', $connection->delete('table')->getQuery());
     }
+
+    public function testInsertWithPostgresPool(): void
+    {
+        $pool  = postgresPool(
+            new PostgresConfig('127.0.0.1', PostgresConfig::DEFAULT_PORT, 'username', 'password', 'databasename')
+        );
+
+        $connection = new Connection($pool);
+
+        $this->assertSame('INSERT INTO "table" ("column1") VALUES (?)', $connection->insert('table')->value('column1', 'value1')->getQuery());
+    }
+
+    public function testInsertWithMysqlPool(): void
+    {
+        $pool  = mysqlPool(
+            new MysqlConfig('127.0.0.1', MysqlConfig::DEFAULT_PORT, 'username', 'password', 'databasename')
+        );
+
+        $connection = new Connection($pool);
+
+        $this->assertSame('INSERT INTO `table` (`column1`) VALUES (?)', $connection->insert('table')->value('column1', 'value1')->getQuery());
+    }
 }

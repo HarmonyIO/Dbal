@@ -11,6 +11,7 @@ use HarmonyIO\Dbal\QueryBuilder\Factory\Field;
 use HarmonyIO\Dbal\QueryBuilder\Factory\Table;
 use HarmonyIO\Dbal\QueryBuilder\QuoteStyle;
 use HarmonyIO\Dbal\QueryBuilder\Statement\Delete;
+use HarmonyIO\Dbal\QueryBuilder\Statement\Insert;
 use HarmonyIO\Dbal\QueryBuilder\Statement\Select;
 use HarmonyIO\Dbal\QueryBuilder\Statement\Update;
 
@@ -78,6 +79,17 @@ class Connection
     public function delete(string $tableDefinition): Delete
     {
         return new Delete(
+            $this->tableFactory->buildFromString($tableDefinition),
+            $this->tableFactory,
+            $this->conditionFactory,
+            $this->fieldFactory
+        );
+    }
+
+    public function insert(string $tableDefinition): Insert
+    {
+        return new Insert(
+            $this->quoteStyle,
             $this->tableFactory->buildFromString($tableDefinition),
             $this->tableFactory,
             $this->conditionFactory,
