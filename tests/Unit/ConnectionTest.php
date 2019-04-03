@@ -32,4 +32,26 @@ class ConnectionTest extends TestCase
 
         $this->assertSame('SELECT `column1`, `column2`', $connection->select('column1', 'column2')->getQuery());
     }
+
+    public function testUpdateWithPostgresPool(): void
+    {
+        $pool  = postgresPool(
+            new PostgresConfig('127.0.0.1', PostgresConfig::DEFAULT_PORT, 'username', 'password', 'databasename')
+        );
+
+        $connection = new Connection($pool);
+
+        $this->assertSame('UPDATE "table"', $connection->update('table')->getQuery());
+    }
+
+    public function testUpdateWithMysqlPool(): void
+    {
+        $pool  = mysqlPool(
+            new MysqlConfig('127.0.0.1', MysqlConfig::DEFAULT_PORT, 'username', 'password', 'databasename')
+        );
+
+        $connection = new Connection($pool);
+
+        $this->assertSame('UPDATE `table`', $connection->update('table')->getQuery());
+    }
 }

@@ -16,8 +16,9 @@ $postgresPool = pool(
 $connection = new Connection($postgresPool);
 
 $query = $connection
-    ->select('id', 'name', 'count(id)', 'users.name as testje')
-    ->from('users')
+    ->update('users')
+    ->set('id = ?', 1)
+    ->set('id = ?', 2)
     ->where('foo IN (?)', ['one', 'two'])
     ->join('companies', 'companies.id = users.company_id')
     ->leftJoin('companies', 'companies.id = users.company_id')
