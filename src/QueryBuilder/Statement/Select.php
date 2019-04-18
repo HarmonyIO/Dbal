@@ -72,7 +72,7 @@ final class Select
 
     public function from(string $table): self
     {
-        $this->from = new From(new Table($this->quoteStyle, $table));
+        $this->from = new From($this->tableFactory->buildFromString($table));
 
         return $this;
     }
