@@ -205,4 +205,24 @@ final class Delete
 
         return 'DELETE FROM ' . $this->table->toSql() . $joins . $condition . $orders . $limit . $offset;
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        $parameters = [];
+
+        if ($this->condition !== null) {
+            $parameters = array_merge($parameters, $this->condition->getParameters());
+        }
+
+        if ($this->joins) {
+            foreach ($this->joins as $join) {
+                $parameters = array_merge($parameters, $join->getParameters());
+            }
+        }
+
+        return $parameters;
+    }
 }
