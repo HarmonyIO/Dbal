@@ -32,4 +32,9 @@ class Value
 
         return '?';
     }
+
+    public function getValue(): Column
+    {
+        return $this->value;
+    }
 }
