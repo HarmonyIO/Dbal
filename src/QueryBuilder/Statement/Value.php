@@ -33,8 +33,11 @@ class Value
         return '?';
     }
 
+    /**
+     * @return int|string|mixed[]|null
+     */
     public function getValue(): Column
     {
-        return $this->value;
+        return $this->value->getValue();
     }
 }
