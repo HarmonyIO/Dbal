@@ -36,7 +36,7 @@ class Value
     /**
      * @return int|string|mixed[]|null
      */
-    public function getValue(): Column
+    public function getValue()
     {
         return $this->value->getValue();
     }
