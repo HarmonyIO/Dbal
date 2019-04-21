@@ -134,4 +134,24 @@ final class Insert
 
         return 'INSERT INTO ' . $this->table->toSql() . ' ' . $fields . ' VALUES ' . $values . $joins;
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        $parameters = [];
+
+        foreach ($this->values as $value) {
+            $parameters[] = $value->getValue();
+        }
+
+        if ($this->joins) {
+            foreach ($this->joins as $join) {
+                $parameters = array_merge($parameters, $join->getParameters());
+            }
+        }
+
+        return $parameters;
+    }
 }
