@@ -19,4 +19,12 @@ class Set implements QueryPart
     {
         return $this->condition->toSql();
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        return $this->condition->getParameters();
+    }
 }

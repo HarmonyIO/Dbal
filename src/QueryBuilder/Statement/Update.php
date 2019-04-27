@@ -230,4 +230,30 @@ final class Update
 
         return 'UPDATE ' . $this->table->toSql() . $set . $joins . $condition . $orders . $limit . $offset;
     }
+
+    /**
+     * @return mixed[]
+     */
+    public function getParameters(): array
+    {
+        $parameters = [];
+
+        if ($this->set) {
+            foreach ($this->set as $set) {
+                $parameters = array_merge($parameters, $set->getParameters());
+            }
+        }
+
+        if ($this->joins) {
+            foreach ($this->joins as $join) {
+                $parameters = array_merge($parameters, $join->getParameters());
+            }
+        }
+
+        if ($this->condition !== null) {
+            $parameters = array_merge($parameters, $this->condition->getParameters());
+        }
+
+        return $parameters;
+    }
 }
